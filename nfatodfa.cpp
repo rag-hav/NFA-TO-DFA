@@ -1,3 +1,9 @@
+/* 
+Raghav Agarwal
+IIITA Allahabad
+*/
+
+
 #include <bits/stdc++.h>
 using namespace std;
 class NFA {
