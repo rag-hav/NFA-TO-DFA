@@ -1,12 +1,15 @@
-/* 
-Raghav Agarwal
-IIITA Allahabad
+/*
+Author: Raghav Agarwal
+Insititute: IIITA Allahabad
 */
 
 
+
 #include <bits/stdc++.h>
+
 using namespace std;
 class NFA {
+        // Simulate a NFA by keeping all current states in a set
     public:
         map<int, map<char, vector<int>>> transition_table;
         set<int> current_states;
@@ -21,6 +24,7 @@ class NFA {
                 initial_state = _initial_state;
                 transition_table = _transition_table;
                 final_states = _final_states;
+                next_state(0);
         }
 
         void next_state(char inp)
@@ -28,7 +32,8 @@ class NFA {
                 set<int> next_states;
                 for (auto q : current_states) {
                         next_states.insert(transition_table[q][inp].begin(), transition_table[q][inp].end());
-                        // epsilon is null character or zero
+
+                        // epsilon (empty input) is represented by 0
                         next_states.insert(transition_table[q][0].begin(), transition_table[q][0].end());
                 }
 
@@ -42,6 +47,7 @@ class NFA {
                                 result |= final_states.find(q) != final_states.end();
                 }
                 cout << endl;
+                cout << (result ? "yes" : "no") << endl;
         }
 
         void run()
@@ -88,6 +94,7 @@ class DFA {
 
 DFA nfatodfa(NFA nfa)
 {
+        // use bitmasking to generate all subsets of the states of nfa to create the dfa
 
         set<int> final_states;
         map<int, map<char, int>> transition_table;
@@ -130,5 +137,5 @@ int main()
 
         DFA dfa = nfatodfa(nfa);
 
-        nfa.run();
+        dfa.run();
 }
